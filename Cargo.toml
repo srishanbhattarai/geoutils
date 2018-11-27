@@ -1,0 +1,6 @@
+[package]
+name = "geoutils"
+version = "0.1.0"
+authors = ["Srishan Bhattarai <srishanbhattarai@gmail.com>"]
+
+[dependencies]
