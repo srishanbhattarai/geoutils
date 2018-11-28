@@ -163,8 +163,8 @@ mod tests {
         let l2 = Location::new(27.740286, 85.337059);
 
         match l1.distance_to(l2) {
-            Ok(dist) => {
-                assert_eq!(dist.distance, 56.409);
+            Ok(distance) => {
+                assert_eq!(distance, 56.409);
             }
             Err(e) => panic!("Failed: {:?}", e),
         }
