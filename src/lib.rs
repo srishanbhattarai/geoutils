@@ -8,8 +8,18 @@ impl Location {
         Location(lat, lon)
     }
 
-    pub fn distance_to(self, to: Location) -> Result<DistanceResult, String> {
-        vincenty_inverse(self, to, 0.00001, 0.0)
+    pub fn distance_to(self, to: Location) -> Result<f64, String> {
+        match vincenty_inverse(self, to, 0.00001, 0.0) {
+            Ok(res) => Ok(res.distance),
+            Err(e) => Err(e),
+        }
+    }
+
+    pub fn is_point_in_circle(self, center: Location, radius: f64) -> Result<bool, String> {
+        match vincenty_inverse(self, center, 0.00001, 0.0) {
+            Ok(res) => Ok(res.distance < radius),
+            Err(e) => Err(e),
+        }
     }
 }
 
