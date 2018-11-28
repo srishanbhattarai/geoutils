@@ -8,6 +8,7 @@ impl Location {
         Location(lat, lon)
     }
 
+    /// Find the distance from itself to another point.
     pub fn distance_to(self, to: Location) -> Result<f64, String> {
         match vincenty_inverse(self, to, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance),
@@ -15,7 +16,8 @@ impl Location {
         }
     }
 
-    pub fn is_point_in_circle(self, center: Location, radius: f64) -> Result<bool, String> {
+    /// Check if the point is within a fixed radius of another point.
+    pub fn is_in_circle(self, center: Location, radius: f64) -> Result<bool, String> {
         match vincenty_inverse(self, center, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance < radius),
             Err(e) => Err(e),
@@ -23,11 +25,12 @@ impl Location {
     }
 }
 
-pub struct DistanceResult {
-    pub distance: f64,
-    pub initial_bearing: Option<f64>,
-    pub final_bearing: Option<f64>,
-    pub iterations: i32,
+/// DistanceResult is a private struct to hold results from Vincenty's inverse formula.
+struct DistanceResult {
+    distance: f64,
+    _initial_bearing: Option<f64>,
+    _final_bearing: Option<f64>,
+    _iterations: i32,
 }
 
 /// Compute the Vincenty Inverse formula on two points 'start' and 'end'.
