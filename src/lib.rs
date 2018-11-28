@@ -46,7 +46,14 @@ impl Location {
         let lon = y.atan2(x);
         let lat = z.atan2(hyp);
 
-        Location(lat.to_degrees(), lon.to_degrees())
+        // Convert to degrees and round to 6 digits
+        let lon = lon.to_degrees();
+        let lon = (lon * 10.0_f64.powi(6)).round() / 10.0_f64.powi(6);
+
+        let lat = lat.to_degrees();
+        let lat = (lat * 10.0_f64.powi(6)).round() / 10.0_f64.powi(6);
+
+        Location(lat, lon)
     }
 }
 
