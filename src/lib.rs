@@ -134,17 +134,17 @@ fn vincenty_inverse(
 
     Ok(DistanceResult {
         distance: (s * 1000.0).round() / 1000.0,
-        initial_bearing: if s == 0.0 {
+        _initial_bearing: if s == 0.0 {
             None
         } else {
             Some(alpha_1.to_degrees())
         },
-        final_bearing: if s == 0.0 {
+        _final_bearing: if s == 0.0 {
             None
         } else {
             Some(alpha_2.to_degrees())
         },
-        iterations: iter_limit,
+        _iterations: iter_limit,
     })
 }
 
