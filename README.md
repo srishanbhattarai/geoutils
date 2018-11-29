@@ -25,5 +25,9 @@ fn main() {
         "Center of berlin and moscow: Lat={}, Lon={}",
         center.0, center.1
     );
+
+    // Check radial bounds
+    let is_in_radius = berlin.is_in_circle(&moscow, 1000).unwrap();
+    println!("Is Berlin in a 1000m radius of Moscow? {}", is_in_radius);
 }
 ```
