@@ -17,9 +17,9 @@ impl Location {
     }
 
     /// Check if the point is within a fixed radius of another point.
-    pub fn is_in_circle(&self, center: &Location, radius: f64) -> Result<bool, String> {
+    pub fn is_in_circle<T: Into<f64>>(&self, center: &Location, radius: T) -> Result<bool, String> {
         match vincenty_inverse(self, center, 0.00001, 0.0) {
-            Ok(res) => Ok(res.distance < radius),
+            Ok(res) => Ok(res.distance < radius.into()),
             Err(e) => Err(e),
         }
     }
