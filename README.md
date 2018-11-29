@@ -26,4 +26,4 @@ fn main() {
         center.0, center.1
     );
 }
-```rust
+```
