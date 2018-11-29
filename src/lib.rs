@@ -1,7 +1,6 @@
 use std::f64::consts::PI;
 
 /// Location defines a point using it's latitude and longitude.
-#[derive(Clone)]
 pub struct Location(pub f64, pub f64);
 
 impl Location {
