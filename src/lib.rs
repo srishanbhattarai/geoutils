@@ -4,8 +4,8 @@ use std::f64::consts::PI;
 pub struct Location(pub f64, pub f64);
 
 impl Location {
-    pub fn new(lat: f64, lon: f64) -> Self {
-        Location(lat, lon)
+    pub fn new<T: Into<f64>>(lat: T, lon: T) -> Self {
+        Location(lat.into(), lon.into())
     }
 
     /// Find the distance from itself to another point.
