@@ -1,11 +1,3 @@
-# geoutils &middot; [![Build Status](https://travis-ci.com/srishanbhattarai/geoutils.svg?branch=master)](https://travis-ci.com/srishanbhattarai/geoutils)
-
-> Geo utilities for Rust applications.
-
-# Usage
-Examples are runnable via `cargo run --example location`.
-
-```rust
 extern crate geoutils;
 
 use geoutils::Location;
@@ -26,4 +18,3 @@ fn main() {
         center.0, center.1
     );
 }
-```

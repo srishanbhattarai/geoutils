@@ -1,7 +1,7 @@
 use std::f64::consts::PI;
 
 /// Location defines a point using it's latitude and longitude.
-pub struct Location(f64, f64);
+pub struct Location(pub f64, pub f64);
 
 impl Location {
     pub fn new(lat: f64, lon: f64) -> Self {
@@ -9,7 +9,7 @@ impl Location {
     }
 
     /// Find the distance from itself to another point.
-    pub fn distance_to(self, to: Location) -> Result<f64, String> {
+    pub fn distance_to(&self, to: &Location) -> Result<f64, String> {
         match vincenty_inverse(self, to, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance),
             Err(e) => Err(e),
@@ -17,7 +17,7 @@ impl Location {
     }
 
     /// Check if the point is within a fixed radius of another point.
-    pub fn is_in_circle(self, center: Location, radius: f64) -> Result<bool, String> {
+    pub fn is_in_circle(&self, center: &Location, radius: f64) -> Result<bool, String> {
         match vincenty_inverse(self, center, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance < radius),
             Err(e) => Err(e),
@@ -25,7 +25,7 @@ impl Location {
     }
 
     // Find the center of given locations.
-    pub fn center(coords: Vec<Location>) -> Location {
+    pub fn center(coords: Vec<&Location>) -> Location {
         let (mut x, mut y, mut z) = (0.0, 0.0, 0.0);
 
         for loc in coords.iter() {
@@ -67,8 +67,8 @@ struct DistanceResult {
 
 /// Compute the Vincenty Inverse formula on two points 'start' and 'end'.
 fn vincenty_inverse(
-    start: Location,
-    end: Location,
+    start: &Location,
+    end: &Location,
     _accuracy: f64,
     _precision: f64,
 ) -> Result<DistanceResult, String> {
@@ -194,7 +194,7 @@ mod tests {
         let l1 = Location::new(27.740068, 85.337576);
         let l2 = Location::new(27.740286, 85.337059);
 
-        match l1.distance_to(l2) {
+        match l1.distance_to(&l2) {
             Ok(distance) => {
                 assert_eq!(distance, 56.409);
             }
@@ -207,7 +207,7 @@ mod tests {
         let l1 = Location::new(52.518611, 13.408056);
         let l2 = Location::new(55.751667, 37.617778);
 
-        let l = Location::center(vec![l1, l2]);
+        let l = Location::center(vec![&l1, &l2]);
 
         assert_eq!(l.0, 54.743683);
         assert_eq!(l.1, 25.033239);
