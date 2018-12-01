@@ -1,6 +1,14 @@
 [package]
 name = "geoutils"
 version = "0.1.0"
+description = "A collection of geo computation utilities"
+repository = "https://github.com/srishanbhattarai/geoutils"
+readme = "README.md"
+license = "Apache-2.0"
+keywords = ["geolib", "geolocation", "geofence"]
 authors = ["Srishan Bhattarai <srishanbhattarai@gmail.com>"]
+
+[badges]
+travis-ci = { repository = "srishanbhattarai/geoutils" }
 
 [dependencies]
