@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/srishanbhattarai/geoutils.svg?branch=master)](https://travis-ci.org/srishanbhattarai/geoutils)
+[![Build Status](https://travis-ci.com/srishanbhattarai/geoutils.svg?branch=master)](https://travis-ci.com/srishanbhattarai/geoutils)
 [![Documentation](https://docs.rs/geoutils/badge.svg)](https://docs.rs/geoutils/)
 
 # geoutils

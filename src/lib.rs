@@ -52,7 +52,7 @@
 //!
 //! let berlin = Location::new(52.518611, 13.408056);
 //! let moscow = Location::new(55.751667, 37.617778);
-//! let is_in_radius = berlin.is_in_circle(&moscow, 2000);
+//! let is_in_radius = berlin.is_in_circle(&moscow, 2000).unwrap();
 //!
 //! println!("Is Berlin in 2000m of Moscow? {}", is_in_radius);
 //! ```
