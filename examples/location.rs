@@ -15,7 +15,8 @@ fn main() {
     let center = Location::center(vec![&berlin, &moscow]);
     println!(
         "Center of berlin and moscow: Lat={}, Lon={}",
-        center.0, center.1
+        center.latitude(),
+        center.longitude()
     );
 
     // Check radial bounds
