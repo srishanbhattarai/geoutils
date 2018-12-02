@@ -2,6 +2,10 @@
 //! Most computations are based off methods on the [Location](struct.Location.html) struct. A simple example to
 //! get distance between two points:
 //! ```
+//! extern crate geoutils;
+//!
+//! use geoutils::Location;
+//!
 //! let berlin = Location::new(52.518611, 13.408056);
 //! let moscow = Location::new(55.751667, 37.617778);
 //! let distance = berlin.distance_to(&moscow).unwrap();
