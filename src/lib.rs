@@ -62,7 +62,7 @@
 mod formula;
 
 /// Location defines a point using it's latitude and longitude.
-#[derive(Debug)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Location(f64, f64);
 
 impl Location {
