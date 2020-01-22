@@ -15,7 +15,7 @@
 //! let moscow = Location::new(55.751667, 37.617778);
 //! let distance = berlin.distance_to(&moscow).unwrap();
 //!
-//! println!("Distance = {}", distance);
+//! println!("Distance = {}", distance.meters());
 //! ```
 //!
 //! * Get the distance between two points using the [Haversine Formula](https://en.wikipedia.org/wiki/Haversine_formula).
@@ -48,11 +48,11 @@
 //! ```rust
 //! extern crate geoutils;
 //!
-//! use geoutils::Location;
+//! use geoutils::{Location, Distance};
 //!
 //! let berlin = Location::new(52.518611, 13.408056);
 //! let moscow = Location::new(55.751667, 37.617778);
-//! let is_in_radius = berlin.is_in_circle(&moscow, 2000).unwrap();
+//! let is_in_radius = berlin.is_in_circle(&moscow, Distance::from_meters(2000.0)).unwrap();
 //!
 //! println!("Is Berlin in 2000m of Moscow? {}", is_in_radius);
 //! ```
@@ -60,6 +60,8 @@
 
 #![deny(missing_docs)]
 mod formula;
+
+pub use formula::Distance;
 
 /// Location defines a point using it's latitude and longitude.
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -83,7 +85,7 @@ impl Location {
 
     /// Find the distance from itself to another point. Internally uses Vincenty's inverse formula.
     /// For better performance and lesser accuracy, consider [haversine_distance_to](struct.Location.html#method.haversine_distance_to).
-    pub fn distance_to(&self, to: &Location) -> Result<f64, String> {
+    pub fn distance_to(&self, to: &Location) -> Result<Distance, String> {
         match formula::vincenty_inverse(self, to, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance),
             Err(e) => Err(e),
@@ -98,9 +100,9 @@ impl Location {
     }
 
     /// Check if the point is within a fixed radius of another point.
-    pub fn is_in_circle<T: Into<f64>>(&self, center: &Location, radius: T) -> Result<bool, String> {
+    pub fn is_in_circle(&self, center: &Location, radius: Distance) -> Result<bool, String> {
         match formula::vincenty_inverse(self, center, 0.00001, 0.0) {
-            Ok(res) => Ok(res.distance < radius.into()),
+            Ok(res) => Ok(res.distance.meters() < radius.meters()),
             Err(e) => Err(e),
         }
     }
@@ -127,7 +129,7 @@ mod tests {
 
         match l1.distance_to(&l2) {
             Ok(distance) => {
-                assert_eq!(distance, 56.409);
+                assert_eq!(distance.meters(), 56.409);
             }
             Err(e) => panic!("Failed: {:?}", e),
         }

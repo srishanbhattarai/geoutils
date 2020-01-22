@@ -1,6 +1,6 @@
 extern crate geoutils;
 
-use geoutils::Location;
+use geoutils::{Distance, Location};
 
 fn main() {
     // Create two locations
@@ -9,7 +9,10 @@ fn main() {
 
     // Get distance between two locations
     let distance = berlin.distance_to(&moscow).unwrap();
-    println!("Distance between berlin and moscow: {} meters", distance);
+    println!(
+        "Distance between berlin and moscow: {} meters",
+        distance.meters()
+    );
 
     // Get the center of a number of locations
     let center = Location::center(vec![&berlin, &moscow]);
@@ -20,6 +23,8 @@ fn main() {
     );
 
     // Check radial bounds
-    let is_in_radius = berlin.is_in_circle(&moscow, 1000).unwrap();
+    let is_in_radius = berlin
+        .is_in_circle(&moscow, Distance::from_meters(1000))
+        .unwrap();
     println!("Is Berlin in a 1000m radius of Moscow? {}", is_in_radius);
 }

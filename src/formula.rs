@@ -1,9 +1,24 @@
 use super::Location;
 use std::f64::consts::PI;
 
+/// Distance represents a physical distance in a certain unit.
+pub struct Distance(f64);
+
+impl Distance {
+    /// Create a distance in meters.
+    pub fn from_meters<P: Into<f64>>(m: P) -> Self {
+        return Distance(m.into());
+    }
+
+    /// Return the distance in meters.
+    pub fn meters(&self) -> f64 {
+        return self.0;
+    }
+}
+
 /// DistanceResult is a struct to hold results from Vincenty's inverse formula.
 pub struct DistanceResult {
-    pub distance: f64,
+    pub distance: Distance,
     _initial_bearing: Option<f64>,
     _final_bearing: Option<f64>,
     _iterations: i32,
@@ -109,7 +124,7 @@ pub fn vincenty_inverse(
     alpha_2 = (alpha_2 + 2.0 * PI) % (2.0 * PI);
 
     Ok(DistanceResult {
-        distance: (s * 1000.0).round() / 1000.0,
+        distance: Distance::from_meters((s * 1000.0).round() / 1000.0),
         _initial_bearing: if s == 0.0 {
             None
         } else {
