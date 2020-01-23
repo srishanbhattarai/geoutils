@@ -140,7 +140,7 @@ pub fn vincenty_inverse(
 }
 
 /// Get the center of a list of coordinates.
-pub fn center_of_coords(coords: Vec<&Location>) -> Location {
+pub fn center_of_coords(coords: &[&Location]) -> Location {
     let (mut x, mut y, mut z) = (0.0, 0.0, 0.0);
 
     for loc in coords.iter() {

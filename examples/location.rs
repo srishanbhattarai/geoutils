@@ -15,7 +15,7 @@ fn main() {
     );
 
     // Get the center of a number of locations
-    let center = Location::center(vec![&berlin, &moscow]);
+    let center = Location::center(&[&berlin, &moscow]);
     println!(
         "Center of berlin and moscow: Lat={}, Lon={}",
         center.latitude(),
