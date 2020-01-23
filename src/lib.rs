@@ -118,11 +118,6 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
-        assert_eq!(2 + 2, 4);
-    }
-
-    #[test]
     fn test_get_distance() {
         let l1 = Location::new(27.740068, 85.337576);
         let l2 = Location::new(27.740286, 85.337059);
