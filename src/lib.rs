@@ -39,7 +39,7 @@
 //!
 //! let berlin = Location::new(52.518611, 13.408056);
 //! let moscow = Location::new(55.751667, 37.617778);
-//! let center = Location::center(vec![&berlin, &moscow]);
+//! let center = Location::center(&[&berlin, &moscow]);
 //!
 //! println!("Center {}, {}", center.latitude(), center.longitude());
 //! ```
@@ -108,7 +108,7 @@ impl Location {
     }
 
     /// Find the center of given locations.
-    pub fn center(coords: Vec<&Location>) -> Location {
+    pub fn center(coords: &[&Location]) -> Location {
         formula::center_of_coords(coords)
     }
 }
@@ -149,7 +149,7 @@ mod tests {
         let l1 = Location::new(52.518611, 13.408056);
         let l2 = Location::new(55.751667, 37.617778);
 
-        let l = Location::center(vec![&l1, &l2]);
+        let l = Location::center(&[&l1, &l2]);
 
         assert_eq!(l.0, 54.743683);
         assert_eq!(l.1, 25.033239);
