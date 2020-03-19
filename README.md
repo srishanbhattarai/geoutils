@@ -33,7 +33,7 @@ let berlin = Location::new(52.518611, 13.408056);
 let moscow = Location::new(55.751667, 37.617778);
 let distance = berlin.haversine_distance_to(&moscow);
 
-println!("Distance = {}", distance);
+println!("Distance = {}", distance.meters());
 ```
 
 * Get the center of a list of coordinates.
@@ -44,7 +44,7 @@ use geoutils::Location;
 
 let berlin = Location::new(52.518611, 13.408056);
 let moscow = Location::new(55.751667, 37.617778);
-let center = Location::center(&[&berlin, &moscow]);
+let center = Location::center(&vec![&berlin, &moscow]);
 
 println!("Center {}, {}", center.latitude(), center.longitude());
 ```

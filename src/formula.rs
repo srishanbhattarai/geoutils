@@ -1,8 +1,15 @@
 use super::Location;
 use std::f64::consts::PI;
+use std::fmt;
 
 /// Distance represents a physical distance in a certain unit.
 pub struct Distance(f64);
+
+impl fmt::Display for Distance {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{} meters", self.meters())
+    }
+}
 
 impl Distance {
     /// Create a distance in meters.
@@ -172,7 +179,7 @@ pub fn center_of_coords(coords: &[&Location]) -> Location {
 }
 
 /// Implementation of Haversine distance between two points.
-pub fn haversine_distance_to(start: &Location, end: &Location) -> f64 {
+pub fn haversine_distance_to(start: &Location, end: &Location) -> Distance {
     let haversine_fn = |theta: f64| (1.0 - theta.cos()) / 2.0;
 
     let phi1 = start.latitude().to_radians();
@@ -184,5 +191,6 @@ pub fn haversine_distance_to(start: &Location, end: &Location) -> f64 {
     let hav_delta_lambda = phi1.cos() * phi2.cos() * haversine_fn(lambda2 - lambda1);
     let total_delta = hav_delta_phi + hav_delta_lambda;
 
-    (2.0 * 6371e3 * total_delta.sqrt().asin() * 1000.0).round() / 1000.0
+    let dist = (2.0 * 6371e3 * total_delta.sqrt().asin() * 1000.0).round() / 1000.0;
+    Distance::from_meters(dist)
 }

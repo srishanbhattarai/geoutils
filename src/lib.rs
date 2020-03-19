@@ -28,7 +28,7 @@
 //! let moscow = Location::new(55.751667, 37.617778);
 //! let distance = berlin.haversine_distance_to(&moscow);
 //!
-//! println!("Distance = {}", distance);
+//! println!("Distance = {}", distance.meters());
 //! ```
 //!
 //! * Get the center of a list of coordinates.
@@ -39,7 +39,7 @@
 //!
 //! let berlin = Location::new(52.518611, 13.408056);
 //! let moscow = Location::new(55.751667, 37.617778);
-//! let center = Location::center(&[&berlin, &moscow]);
+//! let center = Location::center(&vec![&berlin, &moscow]);
 //!
 //! println!("Center {}, {}", center.latitude(), center.longitude());
 //! ```
@@ -85,6 +85,7 @@ impl Location {
 
     /// Find the distance from itself to another point. Internally uses Vincenty's inverse formula.
     /// For better performance and lesser accuracy, consider [haversine_distance_to](struct.Location.html#method.haversine_distance_to).
+    /// This method returns Err if the formula fails to converge within 100 iterations.
     pub fn distance_to(&self, to: &Location) -> Result<Distance, String> {
         match formula::vincenty_inverse(self, to, 0.00001, 0.0) {
             Ok(res) => Ok(res.distance),
@@ -95,7 +96,7 @@ impl Location {
     /// Find the distance from itself to another point using Haversine formula.
     /// This is usually computationally less intensive than [distance_to](struct.Location.html#method.distance_to) but
     /// is generally not as accurate.
-    pub fn haversine_distance_to(&self, to: &Location) -> f64 {
+    pub fn haversine_distance_to(&self, to: &Location) -> Distance {
         formula::haversine_distance_to(self, to)
     }
 
@@ -136,7 +137,7 @@ mod tests {
         let l2 = Location::new(27.740286, 85.337059);
 
         let distance = l1.haversine_distance_to(&l2);
-        assert_eq!(distance, 56.36);
+        assert_eq!(distance.meters(), 56.36);
     }
 
     #[test]
