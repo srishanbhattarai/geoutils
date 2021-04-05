@@ -1,7 +1,7 @@
 [package]
 name = "geoutils"
 edition = "2018"
-version = "0.4.0"
+version = "0.4.1"
 description = "A collection of geo computation utilities"
 repository = "https://github.com/srishanbhattarai/geoutils"
 readme = "README.md"
