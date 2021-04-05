@@ -3,6 +3,7 @@ use std::f64::consts::PI;
 use std::fmt;
 
 /// Distance represents a physical distance in a certain unit.
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub struct Distance(f64);
 
 impl fmt::Display for Distance {
