@@ -53,10 +53,14 @@
 #![deny(missing_docs)]
 mod formula;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 pub use formula::Distance;
 
 /// Location defines a point using it's latitude and longitude.
 #[derive(Debug, PartialEq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Location(f64, f64);
 
 impl Location {

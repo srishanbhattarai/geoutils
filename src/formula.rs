@@ -2,8 +2,12 @@ use super::Location;
 use std::f64::consts::PI;
 use std::fmt;
 
+#[cfg(feature = "serde")]
+use serde::{Deserialize, Serialize};
+
 /// Distance represents a physical distance in a certain unit.
 #[derive(Debug, PartialEq, Clone, Copy)]
+#[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Distance(f64);
 
 impl fmt::Display for Distance {

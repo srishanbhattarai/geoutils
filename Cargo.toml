@@ -12,5 +12,8 @@ authors = ["Srishan Bhattarai <srishanbhattarai@gmail.com>"]
 [badges]
 travis-ci = { repository = "srishanbhattarai/geoutils" }
 
-
 [dependencies]
+serde = { version = "1", optional = true, features = ["derive"] }
+
+[features]
+default = []
