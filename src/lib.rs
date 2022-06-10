@@ -53,9 +53,6 @@
 #![deny(missing_docs)]
 mod formula;
 
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
-
 pub use formula::Distance;
 
 /// Location defines a point using it's latitude and longitude.
