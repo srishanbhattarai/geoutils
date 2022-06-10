@@ -12,8 +12,6 @@ Find the full API reference at [docs.rs](http://docs.rs/geoutils).
 
 * Get the distance between two points using [Vincenty's Inverse Formula](https://en.wikipedia.org/wiki/Vincenty%27s_formulae).
 ```rust
-extern crate geoutils;
-
 use geoutils::Location;
 
 let berlin = Location::new(52.518611, 13.408056);
@@ -25,8 +23,6 @@ println!("Distance = {}", distance.meters());
 
 * Get the distance between two points using the [Haversine Formula](https://en.wikipedia.org/wiki/Haversine_formula).
 ```rust
-extern crate geoutils;
-
 use geoutils::Location;
 
 let berlin = Location::new(52.518611, 13.408056);
@@ -38,8 +34,6 @@ println!("Distance = {}", distance.meters());
 
 * Get the center of a list of coordinates.
 ```rust
-extern crate geoutils;
-
 use geoutils::Location;
 
 let berlin = Location::new(52.518611, 13.408056);
@@ -51,8 +45,6 @@ println!("Center {}, {}", center.latitude(), center.longitude());
 
 * Check if a point falls in a certain radius of another point.
 ```rust
-extern crate geoutils;
-
 use geoutils::{Location, Distance};
 
 let berlin = Location::new(52.518611, 13.408056);

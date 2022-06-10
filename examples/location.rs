@@ -1,5 +1,3 @@
-extern crate geoutils;
-
 use geoutils::{Distance, Location};
 
 fn main() {

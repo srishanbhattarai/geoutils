@@ -1,9 +1,6 @@
-use super::Location;
+use crate::Location;
 use std::f64::consts::PI;
 use std::fmt;
-
-#[cfg(feature = "serde")]
-use serde::{Deserialize, Serialize};
 
 /// Distance represents a physical distance in a certain unit.
 #[derive(Debug, PartialEq, Clone, Copy)]
@@ -19,12 +16,12 @@ impl fmt::Display for Distance {
 impl Distance {
     /// Create a distance in meters.
     pub fn from_meters<P: Into<f64>>(m: P) -> Self {
-        return Distance(m.into());
+        Distance(m.into())
     }
 
     /// Return the distance in meters.
     pub fn meters(&self) -> f64 {
-        return self.0;
+        self.0
     }
 }
 
