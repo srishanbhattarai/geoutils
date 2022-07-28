@@ -199,9 +199,9 @@ pub fn haversine_distance_to(start: &Location, end: &Location) -> Distance {
 
 // To find orientation of ordered triplet (x, y, z).
 // The function returns following values
-// 0 --> x, y and z are collinear
-// 1 --> x, y and z are Clockwise
-// - --> x, y and z are Counterclockwise
+// 0 if x, y and z are collinear
+// 1 if x, y and z are Clockwise
+// -1 if x, y and z are Counterclockwise
 pub fn orientation(x: &Location, y: &Location, z: &Location) -> i8 {
     let val = (y.latitude() - x.latitude()) * (z.longitude() - y.longitude())
         - (y.longitude() - x.longitude()) * (z.latitude() - y.latitude());
