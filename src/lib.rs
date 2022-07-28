@@ -105,6 +105,49 @@ impl Location {
     pub fn center(coords: &[&Location]) -> Location {
         formula::center_of_coords(coords)
     }
+
+    /// Check if the point is the vertex of polygon or line given as vertices
+    pub fn is_in_vertex(&self, vertices: &[&Location]) -> bool {
+        for vertex in vertices {
+            if vertex.latitude() == self.latitude() && vertex.longitude() == self.longitude() {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// Check if the point is the edge of polygon or line given as vertices
+    pub fn is_in_edge(&self, vertices: &[&Location]) -> bool {
+        for (index, vertex) in vertices.iter().enumerate() {
+            let mut next_index = index + 1;
+            if index == vertices.len() - 1 {
+                next_index = 0;
+            }
+            let next_vertex = vertices[next_index];
+            if self.longitude() <= vertex.longitude().max(next_vertex.longitude())
+                && self.longitude() >= vertex.longitude().min(next_vertex.longitude())
+                && self.latitude() <= vertex.latitude().max(next_vertex.latitude())
+                && self.latitude() >= vertex.latitude().min(next_vertex.latitude())
+            {
+                return true;
+            }
+        }
+        false
+    }
+    /// Check if the point lies in polygon or line given as vertices
+    pub fn is_contained_in(&self, vertices: &[&Location]) -> bool {
+        let mut count: u32 = 0;
+        let line1 = [self, &Location(f64::MAX, self.longitude())];
+        for (index, vertex) in vertices.iter().enumerate() {
+            let next_index = (index + 1) % vertices.len();
+            let next_vertex = vertices[next_index];
+            let line2 = [vertex, next_vertex];
+            if formula::do_intersect(&line1, &line2) {
+                count += 1;
+            }
+        }
+        count % 2 == 1
+    }
 }
 
 #[cfg(test)]
@@ -142,5 +185,20 @@ mod tests {
 
         assert_eq!(l.0, 54.743683);
         assert_eq!(l.1, 25.033239);
+    }
+    #[test]
+    fn test_is_contained_in() {
+        let colorado = [
+            &Location(40.996549, -109.001960),
+            &Location(40.983031, -102.125103),
+            &Location(37.061297, -102.107194),
+            &Location(37.075586, -109.001960),
+        ];
+        let colorado_corner = Location(37.075586, -109.001960);
+        let denver = Location(39.725186, -104.984211);
+        let chicago = Location(41.839142, -87.702715);
+        assert_eq!(denver.is_contained_in(&colorado), true);
+        assert_eq!(chicago.is_contained_in(&colorado), false);
+        assert_eq!(colorado_corner.is_contained_in(&colorado), true);
     }
 }

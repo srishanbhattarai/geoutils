@@ -196,3 +196,44 @@ pub fn haversine_distance_to(start: &Location, end: &Location) -> Distance {
     let dist = (2.0 * 6371e3 * total_delta.sqrt().asin() * 1000.0).round() / 1000.0;
     Distance::from_meters(dist)
 }
+
+// To find orientation of ordered triplet (x, y, z).
+// The function returns following values
+// 0 --> x, y and z are collinear
+// 1 --> x, y and z are Clockwise
+// - --> x, y and z are Counterclockwise
+pub fn orientation(x: &Location, y: &Location, z: &Location) -> i8 {
+    let val = (y.latitude() - x.latitude()) * (z.longitude() - y.longitude())
+        - (y.longitude() - x.longitude()) * (z.latitude() - y.latitude());
+
+    if val < 0.0 {
+        return -1;
+    } else if val > 0.0 {
+        return 1;
+    }
+    return 0;
+}
+/// Check if two lines intersect each other
+pub fn do_intersect(line1: &[&Location; 2], line2: &[&Location; 2]) -> bool {
+    let o1 = orientation(line1[0], line1[1], line2[0]);
+    let o2 = orientation(line1[0], line1[1], line2[1]);
+    let o3 = orientation(line2[0], line2[1], line1[0]);
+    let o4 = orientation(line2[0], line2[1], line1[1]);
+
+    if o1 != o2 && o3 != o4 {
+        return true;
+    }
+    if o1 == 0 && line2[0].is_in_edge(line1) {
+        return true;
+    }
+    if o2 == 0 && line2[1].is_in_edge(line1) {
+        return true;
+    }
+    if o3 == 0 && line1[0].is_in_edge(line2) {
+        return true;
+    }
+    if o4 == 0 && line1[1].is_in_edge(line2) {
+        return true;
+    }
+    false
+}
