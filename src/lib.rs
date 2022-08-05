@@ -55,15 +55,20 @@ mod formula;
 
 pub use formula::Distance;
 
-/// Location defines a point using it's latitude and longitude.
+/// Location defines a point using its latitude and longitude.
 #[derive(Debug, PartialEq, Clone, Copy)]
 #[cfg_attr(feature = "serde", derive(serde::Serialize, serde::Deserialize))]
 pub struct Location(f64, f64);
 
 impl Location {
-    /// Create a new Location with it's degree values of latitude and longitude.
+    /// Create a new Location with its degree values of latitude and longitude.
     pub fn new<T: Into<f64>>(lat: T, lon: T) -> Self {
         Location(lat.into(), lon.into())
+    }
+
+    /// Create a new const Location with its degree values of latitude and longitude.
+    pub const fn new_const(lat: f64, lon: f64) -> Self {
+        Location(lat, lon)
     }
 
     /// Get the latitude.
@@ -142,5 +147,13 @@ mod tests {
 
         assert_eq!(l.0, 54.743683);
         assert_eq!(l.1, 25.033239);
+    }
+
+    #[test]
+    fn test_const_location() {
+        const JAKARTA: Location = Location::new_const(-6.125556, 106.655833);
+        let jakarta = Location::new(-6.125556, 106.655833);
+
+        assert_eq!(JAKARTA, jakarta)
     }
 }
